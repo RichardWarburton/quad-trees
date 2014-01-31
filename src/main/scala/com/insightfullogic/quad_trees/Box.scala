@@ -21,6 +21,20 @@ case class Box(center:Point, halfDimension:Point) {
     topLeft || topRight || bottomLeft || bottomRight
   }
 
+  lazy val quarterDim = halfDimension.half()
+
+  def topLeftQuadrant()
+    = Box(Point(center.x - quarterDim.x, center.y + quarterDim.y), quarterDim)
+
+  def topRightQuadrant()
+    = Box(Point(center.x + quarterDim.x, center.y + quarterDim.y), quarterDim)
+
+  def bottomLeftQuadrant()
+    = Box(Point(center.x - quarterDim.x, center.y - quarterDim.y), quarterDim)
+
+  def bottomRightQuadrant()
+    = Box(Point(center.x + quarterDim.x, center.y - quarterDim.y), quarterDim)
+
   private def top: Double = {
     center.y + halfDimension.y
   }
