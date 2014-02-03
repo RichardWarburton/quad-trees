@@ -26,7 +26,7 @@ class BoxSpec extends UnitTest with PropertyChecks {
     (1.0,   0.5,  true)
   )
 
-  "A Box" should "contain points inside and not those outside" in {
+  "A Box" should "contain matches inside and not those outside" in {
     forAll (coords) { (x: Double, y: Double, isContained:Boolean) =>
         val point = Point(x,y)
         assert(box.containsPoint(point) == isContained)

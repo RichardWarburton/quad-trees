@@ -29,6 +29,27 @@ class QuadTree(boundary:Box) {
         || bottomLeft.insert(point) || bottomRight.insert(point))
   }
 
+  def queryWithin(range:Box) : MutableList[Point] = {
+    val matches = MutableList[Point]()
+    queryWithin(range, matches)
+    matches
+  }
+
+  private def queryWithin(range:Box, matches:MutableList[Point]) : Unit = {
+    if (!boundary.intersects(range))
+      return
+    
+    points.filter(range.containsPoint(_))
+          .foreach(matches += _)
+    
+    if (!isLeaf) {
+      topLeft.queryWithin(range, matches)
+      topRight.queryWithin(range, matches)
+      bottomLeft.queryWithin(range, matches)
+      bottomRight.queryWithin(range, matches)
+    }
+  }
+
   def isLeaf: Boolean = {
     topLeft == unused
   }
